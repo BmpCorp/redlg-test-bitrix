@@ -6,7 +6,10 @@ CModule::includeModule("iblock");
 
 class TestImport
     {
-        public static function init() {
+    /**
+     * @param $nIBlockId Код инфоблока кроссовок. Инфоблок должен иметь свойства ID, PRICE, CURRENCY, DESCRIPTION, PICTURE.
+     */
+        public static function import($nIBlockId) {
             // Получаем и парсим данные.
             $obClient = new Client();
             $obResponse = $obClient->get("https://raw.githubusercontent.com/izica/testdata/master/frontend/1/products.json");
@@ -49,7 +52,7 @@ class TestImport
                 } else {
                     // Если элемента нет в базе, создаём его.
                     $nElementID = $obElement->Add([
-                        "IBLOCK_ID" => 12,
+                        "IBLOCK_ID" => $nIBlockId,
                         "IBLOCK_SECTION_ID" => false,
                         "NAME" => $obItem["name"],
                         "PROPERTY_VALUES" => $arProps
